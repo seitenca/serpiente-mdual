@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
+import paqueteSerpiente.Snake.Sentido;
+
 public class FramePrincipal extends JFrame{
 
 	//Atributos
@@ -11,9 +13,11 @@ public class FramePrincipal extends JFrame{
 	static int cell_height = 20;
 	int rows = 30;
 	int cols = 30;
-	int speed;
-	Thread hiloJuego;
-	Snake snk;
+	int speed = 3;
+	boolean pause = false;
+	int boardEdge = 150;
+	Thread gameThread;
+	Snake snk = new Snake(Sentido.U);
 	Egg egg;
 	
 	//Constructor
@@ -21,15 +25,15 @@ public class FramePrincipal extends JFrame{
 	
 	}
 	
-	public FramePrincipal(int cell_width, int cell_height, int rows, int cols, int speed, Thread hiloJuego, Snake snk,
-			Egg egg) {
+	public FramePrincipal(int rows, int cols, int speed, boolean pause, int boardEdge, Thread gameThread, Snake snk,
+			Egg egg) throws HeadlessException {
 		super();
-		this.cell_width = cell_width;
-		this.cell_height = cell_height;
 		this.rows = rows;
 		this.cols = cols;
 		this.speed = speed;
-		this.hiloJuego = hiloJuego;
+		this.pause = pause;
+		this.boardEdge = boardEdge;
+		this.gameThread = gameThread;
 		this.snk = snk;
 		this.egg = egg;
 	}
@@ -86,7 +90,7 @@ public class FramePrincipal extends JFrame{
 	
 	@Override
 	public void paint(Graphics g) {
-		Color c = g.getColor();
+		Color color = g.getColor();
 		g.setColor(Color.gray);
 		
 		for(int i=0;i<rows;i++) {
@@ -96,7 +100,7 @@ public class FramePrincipal extends JFrame{
 			g.drawLine(i*cell_width,0,i*cell_width,rows*cell_height);
 		}
 		
-		g.setColor(c);
+		g.setColor(color);
 	}
 	
 	public void launch() {
@@ -122,7 +126,7 @@ public class FramePrincipal extends JFrame{
 	public static void main(String[] args) {
 		
 		new FramePrincipal().launch();
-		
+		new Snake(Sentido.U).drawSnake();
 	}
 
 }

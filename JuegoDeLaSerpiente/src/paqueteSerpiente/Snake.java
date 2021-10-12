@@ -1,6 +1,5 @@
 package paqueteSerpiente;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -104,7 +103,7 @@ public class Snake {
 	
 	private void removeNodeBack() {
 		
-		snake.set(-1, null);
+		snake.set(snake.size()-1, null);
 		
 	}
 	
@@ -114,19 +113,19 @@ public class Snake {
 		switch(snt) {
 		
 		case U:
-			node = new Node(snake.get(0).getPosY()-1,snake.get(0).getPosX());
+			node = new Node(snake.get(0).getPosX(),snake.get(0).getPosY()-1);
 			break;
 			
 		case D:
-			node = new Node(snake.get(0).getPosY()+1,snake.get(0).getPosX());
+			node = new Node(snake.get(0).getPosX(),snake.get(0).getPosY()+1);
 			break;
 			
 		case L:
-			node = new Node(snake.get(0).getPosY(),snake.get(0).getPosX()-1);
+			node = new Node(snake.get(0).getPosX()-1,snake.get(0).getPosY());
 			break;
 			
 		case R:
-			node = new Node(snake.get(0).getPosY(),snake.get(0).getPosX()+1);
+			node = new Node(snake.get(0).getPosX()+1,snake.get(0).getPosY());
 			break;
 		
 		}
@@ -135,25 +134,23 @@ public class Snake {
 				
 	}
 	
-	public void drawSnake(Graphics g) {
+	public void drawSnake(Graphics gs) {
+				
+		if(snake.size() == 0) {
 		
-		if(snake.get(0)==null) {
-			
-			return;
+			Node firstNode = new Node(10,10);
+			addNodeToArray(firstNode);
 			
 		}
 		
 		goForward();
 		removeNodeBack();
 		
-		Color color = g.getColor();
-		g.setColor(Color.green);
 		for (int i = 0; i < snake.size(); i++) {
-			g.fillRect(snake.get(i).getPosX()*FramePrincipal.cell_width,snake.get(i).getPosY()*FramePrincipal.cell_height,
-					FramePrincipal.cell_width,FramePrincipal.cell_height);
-			g.setColor(color);
+			snake.get(i).drawNode(gs);
+			
 		}
-					
+				
 	}
 	
 }

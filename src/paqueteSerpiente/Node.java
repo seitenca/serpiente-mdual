@@ -51,7 +51,6 @@ public class Node {
     }
 
     public void drawNode(Graphics gn) {
-        // TODO Auto-generated method stub
         Color color = gn.getColor();
         gn.setColor(Color.green);
         gn.fillRect(posX * FramePrincipal.cell_width, posY * FramePrincipal.cell_height,

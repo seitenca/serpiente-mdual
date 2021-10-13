@@ -23,7 +23,7 @@ public class FramePrincipal extends JFrame {
 
     //Constructor
     public FramePrincipal() {
-
+        this.launch();
     }
 
     public FramePrincipal(int rows, int cols, int speed, boolean pause, int boardEdge, Thread gameThread, Snake snk,
@@ -89,11 +89,6 @@ public class FramePrincipal extends JFrame {
 //		this.egg = egg;
 //	}
 
-    public static void main(String[] args) {
-
-        new FramePrincipal().launch();
-    }
-
     @Override
     public void paint(Graphics g) {
         Color color = g.getColor();
@@ -107,7 +102,6 @@ public class FramePrincipal extends JFrame {
         }
 
         g.setColor(color);
-        new Snake(Sentido.U).drawSnake(g);
     }
 
     public void launch() {

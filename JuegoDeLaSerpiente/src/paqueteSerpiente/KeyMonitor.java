@@ -1,5 +1,11 @@
 package paqueteSerpiente;
 
-//public class KeyMonitor extends keyAdapter{
-//
-//}
+import java.awt.event.KeyAdapter;
+
+public class KeyMonitor extends KeyAdapter{
+
+//	p == pause
+//	r == reanude
+//	esc == exit
+	
+}

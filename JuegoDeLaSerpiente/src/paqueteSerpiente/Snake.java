@@ -1,14 +1,18 @@
 package paqueteSerpiente;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Snake {
 	
 	//Atributos
 	private Sentido snt;
-	private ArrayList<Node> snake = new ArrayList<Node>();
+	ArrayList<Node> snake = new ArrayList<Node>();
 	private boolean eatenEgg = false;
 	private boolean colision = false;
 	
@@ -95,12 +99,6 @@ public class Snake {
 		
 	}
 	
-	public void goForward() {
-		
-		advance();
-		
-	}
-	
 	private void removeNodeBack() {
 		
 		snake.set(snake.size()-1, null);
@@ -130,25 +128,43 @@ public class Snake {
 		
 		}
 		
-		addNodeToArray(node);
+		for (int i = 0; i < snake.size(); i++) {
+			
+			if((node.getPosX() == snake.get(i).getPosX() && node.getPosY() == snake.get(i).getPosY())||(node.getPosX() < 1 && node.getPosY() < 1)||(node.getPosX() > 30 && node.getPosY() > 30) ) {
 				
+				//Game Over
+				
+			}
+			
+		}
+			
+//		if(node.getPosX() == getEgg().getPosX() && node.getPosY() == FramePrincipal.egg.getPosY()) {
+//			
+//			addNodeToArray(node);
+//			
+//		}else{
+//			
+//			addNodeToArray(node);
+//			removeNodeBack();
+//		}
+		
 	}
 	
 	public void drawSnake(Graphics gs) {
 				
 		if(snake.size() == 0) {
 		
-			Node firstNode = new Node(10,10);
-			addNodeToArray(firstNode);
+			addNodeToArray(new Node(100,100));
 			
 		}
 		
-		goForward();
-		removeNodeBack();
+		advance();
 		
 		for (int i = 0; i < snake.size(); i++) {
-			snake.get(i).drawNode(gs);
-			
+			Color color = gs.getColor();
+			gs.setColor(color.green);
+			gs.fillRect(snake.get(i).getPosX(), snake.get(i).getPosY(), 20, 20);
+		
 		}
 				
 	}

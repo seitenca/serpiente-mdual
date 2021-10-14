@@ -2,6 +2,9 @@ package paqueteSerpiente;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Node {
 	
@@ -49,14 +52,13 @@ public class Node {
 	public void setLastPosY(int lastPosY) {
 		this.lastPosY = lastPosY;
 	}
-
-	public void drawNode(Graphics gn) {
-		// TODO Auto-generated method stub
-		Color color = gn.getColor();
-		gn.setColor(Color.green);
-		gn.fillRect(posX*FramePrincipal.cell_width,posY*FramePrincipal.cell_height,
-				FramePrincipal.cell_width,FramePrincipal.cell_height);
-		gn.setColor(color);
-	}
+	
+//	public void drawNode(Graphics gn) {
+//		// TODO Auto-generated method stub
+//		Color color = gn.getColor();
+//		gn.setColor(Color.green);
+//		gn.fillRect(this.posX, this.posY, 20, 20);
+//		gn.setColor(color);
+//	}
 	
 }

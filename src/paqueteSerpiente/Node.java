@@ -53,8 +53,8 @@ public class Node {
     public void drawNode(Graphics gn) {
         Color color = gn.getColor();
         gn.setColor(Color.green);
-        gn.fillRect(posX * FramePrincipal.cell_width, posY * FramePrincipal.cell_height,
-                FramePrincipal.cell_width, FramePrincipal.cell_height);
+        gn.fillRect(posX * Main.framePrincipal.getCell_width(), posY * Main.framePrincipal.getCell_height(),
+                Main.framePrincipal.getCell_width(), Main.framePrincipal.getCell_height());
         gn.setColor(color);
     }
 

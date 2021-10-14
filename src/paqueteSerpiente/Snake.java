@@ -10,7 +10,7 @@ public class Snake {
     private Sentido snt;
     private ArrayList<Node> snake = new ArrayList<>();
     private boolean eatenEgg = false;
-    private boolean colision = false;
+    private boolean collision = false;
 
     //Constructor
     public Snake(Sentido snt) {
@@ -43,12 +43,12 @@ public class Snake {
         this.eatenEgg = eatenEgg;
     }
 
-    public boolean isColision() {
-        return colision;
+    public boolean isCollision() {
+        return collision;
     }
 
-    public void setColision(boolean colision) {
-        this.colision = colision;
+    public void setCollision(boolean collision) {
+        this.collision = collision;
     }
 
     //Funciones
@@ -57,7 +57,6 @@ public class Snake {
     }
 
     public void keyPressed(KeyEvent e) {
-
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_UP:
@@ -81,7 +80,6 @@ public class Snake {
                 }
                 break;
         }
-
     }
 
     public void goForward() {
@@ -93,32 +91,24 @@ public class Snake {
     }
 
     public void advance() {
-
         Node node = switch (snt) {
             case U -> new Node(snake.get(0).getPosX(), snake.get(0).getPosY() - 1);
             case D -> new Node(snake.get(0).getPosX(), snake.get(0).getPosY() + 1);
             case L -> new Node(snake.get(0).getPosX() - 1, snake.get(0).getPosY());
             case R -> new Node(snake.get(0).getPosX() + 1, snake.get(0).getPosY());
         };
-
         addNodeToArray(node);
-
     }
 
     public void drawSnake(Graphics gs) {
-
-        if (snake.size() == 0) {
-            Node firstNode = new Node(10, 10);
-            addNodeToArray(firstNode);
+        if (snake.isEmpty()) {
+            addNodeToArray(new Node(10, 10));
         }
-
         goForward();
         removeNodeBack();
-
         for (Node node : snake) {
             node.drawNode(gs);
         }
-
     }
 
     public enum Sentido {

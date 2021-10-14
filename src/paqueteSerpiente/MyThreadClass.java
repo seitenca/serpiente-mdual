@@ -6,7 +6,6 @@ public class MyThreadClass extends JFrame implements Runnable {
 
     @Override
     public void run() {
-
         while (true) {
             repaint();
             try {

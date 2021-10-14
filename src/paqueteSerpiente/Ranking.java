@@ -18,7 +18,7 @@ public class Ranking extends JFrame {
         this.setContentPane(panel);
         this.pack();
         this.setLocationRelativeTo(null);
-        String[] columnNames = {"Nombre", "Puntos", "Ganadas", "Perdidas", "%Ganadas"};
+        String[] columnNames = {"Nombre", "Puntos", "Ganadas", "Perdidas"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         addToRanking(model);
 
@@ -45,23 +45,14 @@ public class Ranking extends JFrame {
 
     // Function that loads the players to the table
     public void addToRanking(DefaultTableModel model) {
-        /**
-         for (Player i : PlayerContainer.playerArrayList) {
-         String winRatio;
-         try {
-         winRatio = String.valueOf((i.getWon() / (i.getWon() + i.getLost())) * 100);
-         } catch (ArithmeticException e) {
-         winRatio = "0";
-         }
-         Object[] row1 = {
-         i.getName(),
-         String.valueOf(i.getPoints()),
-         String.valueOf(i.getWon()),
-         String.valueOf(i.getLost()),
-         winRatio
-         };
-         model.addRow(row1);
-         }
-         **/
+        for (Player i : Main.playerArrayList) {
+            Object[] row1 = {
+                    i.getName(),
+                    String.valueOf(i.getPoints()),
+                    String.valueOf(i.getWins()),
+                    String.valueOf(i.getLoses()),
+            };
+            model.addRow(row1);
+        }
     }
 }

@@ -13,6 +13,7 @@ public class Node {
 	private int posY;
 	private int lastPosX;
 	private int lastPosY;
+	
 	//Constructor
 	public Node(int posX, int posY) {
 		super();
@@ -52,13 +53,5 @@ public class Node {
 	public void setLastPosY(int lastPosY) {
 		this.lastPosY = lastPosY;
 	}
-	
-//	public void drawNode(Graphics gn) {
-//		// TODO Auto-generated method stub
-//		Color color = gn.getColor();
-//		gn.setColor(Color.green);
-//		gn.fillRect(this.posX, this.posY, 20, 20);
-//		gn.setColor(color);
-//	}
 	
 }

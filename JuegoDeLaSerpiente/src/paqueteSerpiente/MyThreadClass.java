@@ -2,26 +2,29 @@ package paqueteSerpiente;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class MyThreadClass extends JFrame implements Runnable {
 
 	@Override
 	public void run() {
 		
-		while(true) {
+		//Se va ejecutando cada movimiento
+		while (true) {
 			
-			repaint();
-			
-			try {
-				
-				Thread.sleep(50);
-				
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-				
-			}
-			
-		}
+            try {
+            	
+                Thread.sleep(FramePrincipal.framePrincipal.getSpeed());
+                
+            } catch (InterruptedException e) {
+            	
+                e.printStackTrace();
+                
+            }
+            
+            FramePrincipal.framePrincipal.getSnk().move();
+            FramePrincipal.framePrincipal.repaint();
+            
+        }
 		
 	}
 

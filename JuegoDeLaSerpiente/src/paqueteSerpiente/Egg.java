@@ -13,17 +13,12 @@ public class Egg {
 	//Atributos
 	private int posX;
 	private int posY;
-	private boolean posCorrect = true;
 	
 	//Constructor
 	public Egg() {
 		
-	}
-
-	public Egg(int posX, int posY) {
-		super();
-		this.posX = posX;
-		this.posY = posY;
+		respawn();
+		
 	}
 
 	//Getters y Setters
@@ -42,39 +37,37 @@ public class Egg {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-
+	
+	//Metodos
+	
+	//Se establecen nuevas coordenadas aleatorias al huevo
 	public void respawn() {
 		
-		int x = (int) Math.floor(Math.random()* (600 - 20 + 1) + 20);
-        int y = (int) Math.floor(Math.random()* (600 - 20 + 1) + 20);
-        while (x % 20 != 0) {
-            x = (int) Math.floor(Math.random()* (600 - 20 + 1) + 20);
-        }
-        while (y % 20 != 0) {
-            y = (int) Math.floor(Math.random()* (600 - 20 + 1) + 20);
-        }
-				
-//		for(int i = 0; i < frame.getSnk().size(); i++) {
-//			
-//			if(frame.getSnk().get(i).getPosX() == x && frame.getSnk().get(i).getPosY() == y) {
-//				
-//				respawn();
-//				
-//			}
-//			
-//		}
-		
-		this.setPosX(x);
-		this.setPosY(y);
+		posX = (int) (Math.random()*18)*20+20;
+        posY = (int) (Math.random()*17)*20+40;
+        
+        this.setPosX(posX);
+		this.setPosY(posY);
 		
 	}
 	
 	public void drawEgg(Graphics ge) {
-		// TODO Auto-generated method stub
-		Color color = ge.getColor();
-		ge.setColor(Color.orange);
-		ge.fillOval(this.posX, this.posY, 20, 20);
-		ge.setColor(color);
+		
+		//Si el huevo aparece en algun nodo de la serpiente se le establecen nuevas coordenadas 
+		for (int i=0; i<Snake.snake.size(); i++) {
+			
+			if (Snake.snake.get(i).getPosX() == this.posX && Snake.snake.get(i).getPosY() == this.posY) {
+				
+				respawn();
+				
+			}
+			
+			//Se dibuja el huevo
+			ge.setColor(Color.orange);
+			ge.fillOval(this.posX, this.posY, 20, 20);
+			
+		}
+		
 	}
 	
 }

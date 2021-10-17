@@ -30,9 +30,9 @@ public class FramePrincipal extends JFrame {
         this.egg = new Egg();
         // Establecer velocidad dependiendo la dificultad
         switch (Main.difficulty) {
-            case 0 -> this.speed = 150;
+            case 0 -> this.speed = 140;
             case 1 -> this.speed = 90;
-            case 2 -> this.speed = 30;
+            case 2 -> this.speed = 40;
         }
         // Se establecen las características de FramePrincipal
         this.setTitle("Juego de la Serpiente");

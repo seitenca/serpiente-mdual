@@ -12,13 +12,13 @@ public class Ranking extends JFrame {
     JPanel panel = new JPanel();
 
     public Ranking() {
-        super("main.project.battle");
+        super("Ranking - Juego de la Serpiente");
         this.setPreferredSize(new Dimension(520, 520));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(panel);
         this.pack();
         this.setLocationRelativeTo(null);
-        String[] columnNames = {"Nombre", "Puntos", "Ganadas", "Perdidas"};
+        String[] columnNames = {"Nombre", "Puntos"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         addToRanking(model);
 
@@ -45,12 +45,10 @@ public class Ranking extends JFrame {
 
     // Function that loads the players to the table
     public void addToRanking(DefaultTableModel model) {
-        for (Player i : Main.playerArrayList) {
+        for (Player i : Main.partidasArrayList) {
             Object[] row1 = {
                     i.getName(),
-                    String.valueOf(i.getPoints()),
-                    String.valueOf(i.getWins()),
-                    String.valueOf(i.getLoses()),
+                    String.valueOf(i.getRecord())
             };
             model.addRow(row1);
         }

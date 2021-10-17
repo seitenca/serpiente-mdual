@@ -1,45 +1,33 @@
 package paqueteSerpiente;
 
 public class Player {
-    int points, wins, loses;
+    int id;
+    double record;
     String name;
 
-    public Player(String name, int points, int wins, int loses) {
-        this.points = points;
-        this.wins = wins;
-        this.loses = loses;
+    public Player(String name, double record) {
+        this.record = record;
         this.name = name;
     }
 
-    public int getPoints() {
-        return points;
+    public int getId() {
+        return id;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getWins() {
-        return wins;
+    public double getRecord() {
+        return record;
     }
 
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
-    public int getLoses() {
-        return loses;
-    }
-
-    public void setLoses(int loses) {
-        this.loses = loses;
+    public void setRecord(double record) {
+        this.record = record;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

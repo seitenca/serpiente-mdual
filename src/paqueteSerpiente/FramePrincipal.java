@@ -8,146 +8,120 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class FramePrincipal extends JFrame {
-
+    public static JDialog jDialog;
+    public static JLabel labelDialog;
     //Atributos
-    private int cell_width = 20;
-    private int cell_height = 20;
-    private int rows = 30;
-    private int cols = 30;
+    private final int cell_width;
+    private final int cell_height;
+    private final int rows;
+    private final int cols;
     private int speed;
-    private boolean pause = false;
-    private int boardEdge = 150;
-    private int puntos = 0;
-    private Thread gameThread;
-    private Snake snk = new Snake(Sentido.U);
-    private Egg egg;
+    private final Snake snk;
+    private final Egg egg;
 
     //Constructor
-    public FramePrincipal(int speed) {
-        this.speed = speed;
-        this.launch();
+    public FramePrincipal(int cell_width, int cell_height, int rows, int cols) {
+        super();
+        this.cell_width = cell_width;
+        this.cell_height = cell_height;
+        this.rows = rows;
+        this.cols = cols;
+        this.snk = new Snake(Sentido.R);
+        this.egg = new Egg();
+        // Establecer velocidad dependiendo la dificultad
+        switch (Main.difficulty) {
+            case 0 -> this.speed = 150;
+            case 1 -> this.speed = 90;
+            case 2 -> this.speed = 30;
+        }
+        // Se establecen las características de FramePrincipal
+        this.setTitle("Juego de la Serpiente");
+        this.setBounds(500, 150, 600, 600);
+        this.addKeyListener(snk);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        this.setResizable(false);
+        this.setVisible(true);
+        // creation of the win/lost dialog
+        JButton button1 = new JButton("Return to Menu");
+        JButton button2 = new JButton("Play again");
+        labelDialog = new JLabel();
+        jDialog = new JDialog(this, "", true);
+        jDialog.add(new JLabel());
+        jDialog.setLocationRelativeTo(null);
+        jDialog.setLayout(new FlowLayout());
+        jDialog.setSize(250, 100);
+        jDialog.add(button1);
+        jDialog.add(button2);
+        jDialog.add(labelDialog);
+
+        // Button event to return to menu
+        button1.addActionListener(e -> {
+            // Reiniciamos puntos a 0;
+            Snake.puntos = 0;
+            jDialog = null;
+            this.dispose();
+            Main.menuPanel = new Menu();
+        });
+        // Button event to play again
+        button2.addActionListener(e -> {
+            // Reiniciamos puntos a 0;
+            Snake.puntos = 0;
+            jDialog = null;
+            this.dispose();
+            Main.framePrincipal = new FramePrincipal(20, 20, 30, 30);
+        });
+        // If the player close the dialog do the button1 event
+        jDialog.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                button1.doClick();
+            }
+        });
     }
 
-    //Setters y Getters
+    //Getters y Setters
     public int getCell_width() {
         return cell_width;
-    }
-
-    public void setCell_width(int cell_width) {
-        this.cell_width = cell_width;
     }
 
     public int getCell_height() {
         return cell_height;
     }
 
-    public void setCell_height(int cell_height) {
-        this.cell_height = cell_height;
-    }
-
     public int getRows() {
         return rows;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
     }
 
     public int getCols() {
         return cols;
     }
 
-    public void setCols(int cols) {
-        this.cols = cols;
-    }
-
     public int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public boolean isPause() {
-        return pause;
-    }
-
-    public void setPause(boolean pause) {
-        this.pause = pause;
-    }
-
-    public int getBoardEdge() {
-        return boardEdge;
-    }
-
-    public void setBoardEdge(int boardEdge) {
-        this.boardEdge = boardEdge;
-    }
-
-    public int getPuntos() {
-        return puntos;
-    }
-
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
-    public Thread getGameThread() {
-        return gameThread;
-    }
-
-    public void setGameThread(Thread gameThread) {
-        this.gameThread = gameThread;
     }
 
     public Snake getSnk() {
         return snk;
     }
 
-    public void setSnk(Snake snk) {
-        this.snk = snk;
-    }
-
     public Egg getEgg() {
         return egg;
     }
 
-    public void setEgg(Egg egg) {
-        this.egg = egg;
-    }
-
     @Override
     public void paint(Graphics g) {
-        Color color = g.getColor();
+        //Se dibujan las filas, las columnas y el primer huevo
         g.setColor(Color.gray);
-
         for (int i = 0; i < rows; i++) {
             g.drawLine(0, i * cell_height, cols * cell_width, i * cell_height);
         }
         for (int i = 0; i < cols; i++) {
             g.drawLine(i * cell_width, 0, i * cell_width, rows * cell_height);
         }
-
-        g.setColor(color);
+        egg.drawEgg(g);
     }
-
-    public void launch() {
-        this.setTitle("Juego de la Serpiente");
-        this.setBounds(700, 300, rows * cell_height, cols * cell_width);
-        this.setResizable(false);
-        this.setVisible(true);
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                Main.framePrincipal.dispose();
-                Main.menuPanel = new Menu();
-                //System.exit(0);
-            }
-        });
-        new Thread(new MyThreadClass()).start();
-    }
-
 }
-

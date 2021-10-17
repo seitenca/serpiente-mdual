@@ -6,14 +6,15 @@ public class MyThreadClass extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        //Se va ejecutando cada movimiento
         while (true) {
-            repaint();
             try {
-                Thread.sleep(50);
+                Thread.sleep(Main.framePrincipal.getSpeed());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            Main.framePrincipal.getSnk().move();
+            Main.framePrincipal.repaint();
         }
     }
-
 }

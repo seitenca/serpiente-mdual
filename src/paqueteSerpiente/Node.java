@@ -1,9 +1,6 @@
 package paqueteSerpiente;
 
-import java.awt.*;
-
 public class Node {
-
     //Atributos
     private int posX;
     private int posY;
@@ -48,14 +45,6 @@ public class Node {
 
     public void setLastPosY(int lastPosY) {
         this.lastPosY = lastPosY;
-    }
-
-    public void drawNode(Graphics gn) {
-        Color color = gn.getColor();
-        gn.setColor(Color.green);
-        gn.fillRect(posX * Main.framePrincipal.getCell_width(), posY * Main.framePrincipal.getCell_height(),
-                Main.framePrincipal.getCell_width(), Main.framePrincipal.getCell_height());
-        gn.setColor(color);
     }
 
 }

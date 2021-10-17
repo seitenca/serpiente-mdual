@@ -7,16 +7,16 @@ import java.sql.SQLException;
 public class Menu extends JFrame {
     public Menu() {
         super("Menu - Juego de la Serpiente");
-
         JButton jugarButton = new JButton();
         JButton rankingButton = new JButton();
         JButton salirButton = new JButton();
         JTextField textField1 = new JTextField();
-        JSlider slider1 = new JSlider();
+        String[] difficulties = {"Fácil", "Normal", "Difícil"};
+        JComboBox<String> comboBox = new JComboBox<>(difficulties);
         JPanel menu = new JPanel();
         JLabel nombreLabel = new JLabel();
         JLabel velocidadLabel = new JLabel();
-        JLabel avisoLavel = new JLabel();
+        JLabel avisoLabel = new JLabel();
 
         this.setPreferredSize(new Dimension(400, 300));
         this.setContentPane(menu);
@@ -25,24 +25,17 @@ public class Menu extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        avisoLavel.setVisible(false);
-
+        avisoLabel.setVisible(false);
         menu.setLayout(new GridBagLayout());
 
-        slider1.setValue(3);
-        slider1.setMinimum(1);
-        slider1.setMaximum(10);
-        slider1.setPaintLabels(false);
-        slider1.setPaintTicks(false);
-        slider1.setValueIsAdjusting(false);
         jugarButton.setText("Jugar");
         rankingButton.setText("Ranking");
         salirButton.setText("Salir");
         textField1.setText("");
         nombreLabel.setText("Nombre:");
-        velocidadLabel.setText("Velocidad:");
-        avisoLavel.setForeground(Color.RED);
-        avisoLavel.setText("Es obligatorio poner nombre*");
+        velocidadLabel.setText("Dificultad:");
+        avisoLabel.setForeground(Color.RED);
+        avisoLabel.setText("Es obligatorio poner nombre*");
 
         // GridBagConstraints
         GridBagConstraints gbc;
@@ -72,7 +65,7 @@ public class Menu extends JFrame {
         gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        menu.add(slider1, gbc);
+        menu.add(comboBox, gbc);
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -87,11 +80,19 @@ public class Menu extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        menu.add(avisoLavel, gbc);
+        menu.add(avisoLabel, gbc);
 
         jugarButton.addActionListener(actionEvent -> {
+            Object selectedItem = comboBox.getSelectedItem();
+            if ("Fácil".equals(selectedItem)) {
+                Main.difficulty = 0;
+            } else if ("Normal".equals(selectedItem)) {
+                Main.difficulty = 1;
+            } else if ("Difícil".equals(selectedItem)) {
+                Main.difficulty = 2;
+            }
             if (textField1.getText().isBlank()) {
-                avisoLavel.setVisible(true);
+                avisoLabel.setVisible(true);
             } else {
                 this.dispose();
                 boolean flag = false;
@@ -105,7 +106,7 @@ public class Menu extends JFrame {
                 }
                 if (!flag) {
                     try {
-                        Player player = new Player(textField1.getText(), 0, 0, 0);
+                        Player player = new Player(textField1.getText(), 0);
                         Main.player = player;
                         Main.playerArrayList.add(player);
                         Main.addPlayerDB(Main.player);
@@ -113,9 +114,12 @@ public class Menu extends JFrame {
                         e.printStackTrace();
                     }
                 }
-                Main.framePrincipal = new FramePrincipal(slider1.getValue());
-                Snake snk = new Snake(Snake.Sentido.D);
-                snk.drawSnake(Main.framePrincipal.getGraphics());
+                Main.framePrincipal = new FramePrincipal(20, 20, 30, 30);
+
+                if (!Main.threadIsRunning) {
+                    Main.threadIsRunning = true;
+                    new Thread(new MyThreadClass()).start();
+                }
             }
         });
 

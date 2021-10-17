@@ -6,9 +6,12 @@ CREATE DATABASE `serpiente`;
 USE `serpiente`;
 
 CREATE TABLE players(
-	player_id int auto_increment primary key,
+    player_id int auto_increment primary key,
     player_name varchar(255),
-    points int,
-    wins int,
-    losses int,
+    points double
+);
+CREATE TABLE games(
+    game_id int auto_increment primary key,
+    player_name varchar(255),
+    points double
 );

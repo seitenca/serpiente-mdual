@@ -30,7 +30,7 @@ public class Egg {
         this.posY = posY;
     }
 
-    //Métodos
+    //Metodos
     //Se establecen nuevas coordenadas aleatorias al huevo
     public void respawn() {
         posX = (int) (Math.random() * 18) * 20 + 20;
@@ -41,7 +41,7 @@ public class Egg {
     }
 
     public void drawEgg(Graphics ge) {
-        //Si el huevo aparece en algún nodo de la serpiente se le establecen nuevas coordenadas
+        //Si el huevo aparece en algun nodo de la serpiente se le establecen nuevas coordenadas
         for (int i = 0; i < Snake.snake.size(); i++) {
             if (Snake.snake.get(i).getPosX() == this.posX && Snake.snake.get(i).getPosY() == this.posY) {
                 respawn();

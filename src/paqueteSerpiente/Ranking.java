@@ -11,6 +11,7 @@ import java.util.List;
 public class Ranking extends JFrame {
     JPanel panel = new JPanel();
 
+    //Constructor de ranking
     public Ranking() {
         super("Ranking - Juego de la Serpiente");
         this.setPreferredSize(new Dimension(520, 520));
@@ -22,7 +23,7 @@ public class Ranking extends JFrame {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         addToRanking(model);
 
-        // Sort the table
+        //Ordenar el ranking
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
         List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
         sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
@@ -36,14 +37,14 @@ public class Ranking extends JFrame {
         table.setRowSorter(sorter);
         this.add(scrollPane);
 
-        // Button event to close the panel
+        //Boton para salir del ranking
         button.addActionListener(actionEvent -> {
             this.dispose();
             new Menu().setVisible(true);
         });
     }
 
-    // Function that loads the players to the table
+    //Carga la arraylist de partidas y la introduce en la tabla
     public void addToRanking(DefaultTableModel model) {
         for (Player i : Main.partidasArrayList) {
             Object[] row1 = {

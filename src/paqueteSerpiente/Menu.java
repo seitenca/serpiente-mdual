@@ -5,13 +5,15 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Menu extends JFrame {
+
+    //Constructor de menu
     public Menu() {
         super("Menu - Juego de la Serpiente");
         JButton jugarButton = new JButton();
         JButton rankingButton = new JButton();
         JButton salirButton = new JButton();
         JTextField textField1 = new JTextField();
-        String[] difficulties = {"Fácil", "Normal", "Difícil"};
+        String[] difficulties = {"Facil", "Normal", "Dificil"};
         JComboBox<String> comboBox = new JComboBox<>(difficulties);
         JPanel menu = new JPanel();
         JLabel nombreLabel = new JLabel();
@@ -37,7 +39,7 @@ public class Menu extends JFrame {
         avisoLabel.setForeground(Color.RED);
         avisoLabel.setText("Es obligatorio poner nombre*");
 
-        // GridBagConstraints
+        //Posicionar elementos en menu
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -83,19 +85,22 @@ public class Menu extends JFrame {
         menu.add(avisoLabel, gbc);
 
         jugarButton.addActionListener(actionEvent -> {
+            //Se asigna la dificultad en funcion de la eleccion del jugador
             Object selectedItem = comboBox.getSelectedItem();
-            if ("Fácil".equals(selectedItem)) {
+            if ("Facil".equals(selectedItem)) {
                 Main.difficulty = 0;
             } else if ("Normal".equals(selectedItem)) {
                 Main.difficulty = 1;
-            } else if ("Difícil".equals(selectedItem)) {
+            } else if ("Dificil".equals(selectedItem)) {
                 Main.difficulty = 2;
             }
+            //Se comprueba que el jugador introduce un nombre
             if (textField1.getText().isBlank()) {
                 avisoLabel.setVisible(true);
             } else {
                 this.dispose();
                 boolean flag = false;
+                //Se comprueba que haya algun jugador y si no existe el usuario
                 if (Main.playerArrayList != null) {
                     for (Player p : Main.playerArrayList) {
                         if (p.getName().equalsIgnoreCase(textField1.getText())) {
@@ -104,6 +109,7 @@ public class Menu extends JFrame {
                         }
                     }
                 }
+                //Si no encuentra ningun jugador o el introducido no existe se anyade el nuevo jugador
                 if (!flag) {
                     try {
                         Player player = new Player(textField1.getText(), 0);
@@ -114,12 +120,11 @@ public class Menu extends JFrame {
                         e.printStackTrace();
                     }
                 }
+                //Se ejecuta el Frame Principal
                 Main.framePrincipal = new FramePrincipal(20, 20, 30, 30);
+                //Se ejecuta el hilo 
+                new Thread(new MyThreadClass()).start();
 
-                if (!Main.threadIsRunning) {
-                    Main.threadIsRunning = true;
-                    new Thread(new MyThreadClass()).start();
-                }
             }
         });
 

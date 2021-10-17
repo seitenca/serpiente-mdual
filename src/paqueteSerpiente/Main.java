@@ -10,7 +10,6 @@ public class Main {
     public static ArrayList<Player> playerArrayList = new ArrayList<>();
     public static Player player;
     public static int difficulty = 1;
-    public static boolean threadIsRunning = false;
     private static Connection connection;
 
     public static void main(String[] args) {
@@ -22,8 +21,9 @@ public class Main {
         }
     }
 
+    //Se importa la base de datos y se carga en las variables partidasArrayList y playerArrayList
     public static void importDB() throws SQLException, ClassNotFoundException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost/serpiente?serverTimezone=UTC", "alex", "alex");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost/serpiente?serverTimezone=UTC", "Alumne", "alumne");
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         Statement stmt = connection.createStatement();
@@ -45,7 +45,7 @@ public class Main {
         }
     }
 
-    // Function to add players to DB
+    //Se anyaden jugadores a la BD
     public static void addPlayerDB(Player player) throws SQLException, ClassNotFoundException, NullPointerException {
         int next_id = 0;
         Statement stmt = connection.createStatement();
@@ -65,7 +65,7 @@ public class Main {
         ps.executeUpdate();
     }
 
-    // Function to add game to DB
+    //Se anyaden las partidas a la BD
     public static void addGameDB(double points, String player_name) throws SQLException, ClassNotFoundException, NullPointerException {
         int next_id = 0;
         Statement stmt = connection.createStatement();
@@ -85,7 +85,7 @@ public class Main {
         ps.executeUpdate();
     }
 
-    // Function to update all stats in database
+    //Se actualizan los puntos maximos de los jugadores
     public static void updatePlayerStatsDB() throws SQLException, NullPointerException {
         String resetStats = "update players set points = ? where player_id = ?";
         PreparedStatement ps = connection.prepareStatement(resetStats);

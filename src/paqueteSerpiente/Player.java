@@ -1,10 +1,12 @@
 package paqueteSerpiente;
 
 public class Player {
+    //Atributos
     int id;
     double record;
     String name;
 
+    //Constructor
     public Player(String name, double record) {
         this.record = record;
         this.name = name;

@@ -15,9 +15,10 @@ public class FramePrincipal extends JFrame {
     private final int cell_height;
     private final int rows;
     private final int cols;
-    private int speed;
     private final Snake snk;
     private final Egg egg;
+    private int speed;
+    private boolean collision;
 
     //Constructor
     public FramePrincipal(int cell_width, int cell_height, int rows, int cols) {
@@ -26,6 +27,7 @@ public class FramePrincipal extends JFrame {
         this.cell_height = cell_height;
         this.rows = rows;
         this.cols = cols;
+        this.collision = false;
         this.snk = new Snake(Sentido.R);
         this.egg = new Egg();
         // Establecer velocidad dependiendo la dificultad
@@ -34,7 +36,7 @@ public class FramePrincipal extends JFrame {
             case 1 -> this.speed = 90;
             case 2 -> this.speed = 40;
         }
-        // Se establecen las características de FramePrincipal
+        //Se establecen las caracteristicas de FramePrincipal
         this.setTitle("Juego de la Serpiente");
         this.setBounds(500, 150, 600, 600);
         this.addKeyListener(snk);
@@ -46,7 +48,7 @@ public class FramePrincipal extends JFrame {
         });
         this.setResizable(false);
         this.setVisible(true);
-        // creation of the win/lost dialog
+        //Se crean los dialogos de volver a jugar o volver al menu
         JButton button1 = new JButton("Return to Menu");
         JButton button2 = new JButton("Play again");
         labelDialog = new JLabel();
@@ -59,23 +61,25 @@ public class FramePrincipal extends JFrame {
         jDialog.add(button2);
         jDialog.add(labelDialog);
 
-        // Button event to return to menu
+        //Boton para volver al menu
         button1.addActionListener(e -> {
-            // Reiniciamos puntos a 0;
+            //Se reinicia los puntos a 0
             Snake.puntos = 0;
+            Snake.snake.clear();
             jDialog = null;
             this.dispose();
             Main.menuPanel = new Menu();
         });
-        // Button event to play again
+        //Boton para volver a jugar
         button2.addActionListener(e -> {
-            // Reiniciamos puntos a 0;
+            //Se reinician los puntos a 0
             Snake.puntos = 0;
+            Snake.snake.clear();
             jDialog = null;
             this.dispose();
             Main.framePrincipal = new FramePrincipal(20, 20, 30, 30);
         });
-        // If the player close the dialog do the button1 event
+        //Si el jugador cierra la pestanya de dialogo se ejecuta el evento de volver al menu
         jDialog.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 button1.doClick();
@@ -110,6 +114,14 @@ public class FramePrincipal extends JFrame {
 
     public Egg getEgg() {
         return egg;
+    }
+
+    public boolean isCollision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
     }
 
     @Override
